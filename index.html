@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Dark Xiter</title>
+
+<style>
+:root{ --img:url("darkxiter.png"); }
+
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
+body{background:#000;overflow:hidden}
+
+/* FUNDO IMAGEM */
+.background{
+  position:fixed; inset:0;
+  background:var(--img) center/cover no-repeat;
+  filter:brightness(0.35);
+  z-index:-4;
+}
+
+/* TEXTO FUNDO */
+.bg-text{
+  position:fixed; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  font-size:110px; font-weight:900;
+  color:#b14cff; opacity:.12;
+  text-transform:uppercase; letter-spacing:6px;
+  text-shadow:0 0 30px #a64dff, 0 0 70px #7b2cff;
+  pointer-events:none; z-index:-3;
+}
+
+/* OVERLAY */
+.overlay{ position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:-2; }
+
+/* BOLINHA */
+.floating{
+  position:fixed; right:20px; bottom:90px;
+  width:70px; height:70px; border-radius:50%;
+  background:var(--img) center/cover no-repeat;
+  border:2px solid #b14cff;
+  box-shadow:0 0 20px #b14cff;
+  animation:float 3s ease-in-out infinite;
+  cursor:pointer; z-index:999;
+}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+
+/* PAINEL */
+.panel{
+  position:fixed; top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  width:330px; padding:15px;
+  background:rgba(10,0,20,.95);
+  border-radius:16px;
+  box-shadow:0 0 30px #a64dff;
+  display:none;
+}
+.panel h2{color:#c77dff;text-align:center;margin-bottom:12px}
+
+/* BOTÕES */
+.btn{
+  width:100%; padding:10px; margin:6px 0;
+  border:none; border-radius:8px;
+  background:#1a0033; color:#dcb3ff;
+  box-shadow:0 0 10px #7b2cff;
+  cursor:pointer; transition:.2s;
+}
+.btn:hover{background:#2a0055}
+.inject{background:#3b0066;font-weight:bold}
+
+/* ESTADO ATIVO */
+.btn.active{
+  background:#4a0080;
+  box-shadow:0 0 20px #c77dff, inset 0 0 10px #ffccff;
+  animation:pulse .8s ease;
+}
+@keyframes pulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.05)}
+  100%{transform:scale(1)}
+}
+
+/* STATUS */
+.status{text-align:center;color:#b88cff;margin-top:8px;min-height:20px}
+</style>
+</head>
+
+<body>
+
+<div class="background"></div>
+<div class="bg-text">DARK XITERS EMPRESA</div>
+<div class="overlay"></div>
+
+<div class="floating" onclick="togglePanel()"></div>
+
+<div class="panel" id="panel">
+  <h2>Dark Xiter</h2>
+
+  <button class="btn inject" onclick="inject()">INJETAR</button>
+
+  <button class="btn" onclick="toggleFunc(this)">Grudar no Corpo</button>
+  <button class="btn" onclick="toggleFunc(this)">HS Pescoço</button>
+  <button class="btn" onclick="toggleFunc(this)">HS Cabeça</button>
+  <button class="btn" onclick="toggleFunc(this)">HS Pé</button>
+
+  <button class="btn" onclick="toggleFunc(this)">Aimbot</button>
+  <button class="btn" onclick="toggleFunc(this)">Aimlock</button>
+  <button class="btn" onclick="toggleFunc(this)">No Recoil</button>
+  <button class="btn" onclick="toggleFunc(this)">Mira Leve</button>
+  <button class="btn" onclick="toggleFunc(this)">FOV</button>
+  <button class="btn" onclick="toggleFunc(this)">Holograma</button>
+
+  <div class="status" id="status"></div>
+</div>
+
+<script>
+function togglePanel(){
+  const p=document.getElementById("panel");
+  p.style.display = p.style.display==="block" ? "none" : "block";
+}
+
+/* VOZ ROBÔ */
+function speak(txt){
+  const u=new SpeechSynthesisUtterance(txt);
+  u.lang="pt-BR"; u.rate=0.9; u.pitch=0.6;
+  speechSynthesis.speak(u);
+}
+
+/* ATIVAR / DESATIVAR */
+function toggleFunc(btn){
+  btn.classList.toggle("active");
+  if(btn.classList.contains("active")){
+    speak("ativado");
+  }
+}
+
+/* INJETAR */
+function inject(){
+  let s=10;
+  const st=document.getElementById("status");
+  st.innerText="Injetando... "+s;
+  const t=setInterval(()=>{
+    s--; st.innerText="Injetando... "+s;
+    if(s<=0){ clearInterval(t); st.innerText="Injetado"; speak("ativado"); }
+  },1000);
+}
+</script>
+
+</body>
+  </html>
